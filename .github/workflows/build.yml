@@ -25,6 +25,10 @@ jobs:
       - name: Extract project
         run: unzip -q BRAWL-BOOST-REBUILT.zip -d extracted
 
+      - name: Fix MainActivity
+        run: |
+          sed -i 's/setBackgroundColor(background)/setBackgroundColor(this@MainActivity.background)/' extracted/BrawlBoost/app/src/main/java/com/example/brawlboost/MainActivity.kt
+
       - name: Build APK
         working-directory: extracted/BrawlBoost
         run: gradle :app:assembleDebug
@@ -34,3 +38,4 @@ jobs:
         with:
           name: BrawlBoost-APK
           path: extracted/BrawlBoost/app/build/outputs/apk/debug/*.apk
+
